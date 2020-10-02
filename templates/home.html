@@ -1,0 +1,36 @@
+<head>
+    <h1 >POSTS</h1>
+
+<style>
+img {
+    height:200px;
+    width:20%;
+}
+
+</style>
+</head>
+<body>
+    {% for post in posts %}
+        <hr>
+        <h4>{{post.content}}</h4>
+        <div class="item">
+            <img src="{{ post.image.url }}" alt="img" width="200" height="100">
+            <img src="{{ post.image1.url }}" alt="img1">
+        </div>
+        <form action="{% url 'post:like-post' %}" method="POST" width="200" height="100">
+            {% csrf_token %}
+            {% if user not in post.Likes.all %}
+                <button  type="submit" name="post_id" value="{{post.id}}">Like</button>
+            {% else %}
+                <button  type="submit" name="post_id" value="{{post.id}}">Unlike</button>
+            {% endif %}
+        </form>
+        <strong>{{post.Likes.all.count}} Likes</strong>
+        <strong>{{post.Unlikes.all.count}} Unlikes</strong>
+        <p>Posted on {{post.timestamp}}</p>
+        <p>tags: {{post.tags}}</p> 
+    {% endfor %}
+</body>
+
+
+
